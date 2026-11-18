@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Practice Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+        .exercise {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .option-btn {
+            padding: 10px 15px;
+            background-color: #fff;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            border-color: #3498db;
+            background-color: #f2f9ff;
+        }
+        .option-btn.selected {
+            border-color: #3498db;
+            background-color: #e3f2fd;
+            font-weight: bold;
+        }
+        button.check-btn {
+            padding: 8px 15px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button.check-btn:hover {
+            background-color: #27ae60;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct { color: #27ae60; }
+        .incorrect { color: #c0392b; }
+        .reveal { color: #e67e22; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Practice Test</h1>
+        <p style="text-align: center;">Select the correct option to form the question.</p>
+
+        <div class="exercise">
+            <p><strong>Exercise 1</strong></p>
+            <p>What is the correct order for the occupation question?</p>
+            
+            <div class="options">
+                <button class="option-btn" onclick="selectOption(this, 'What she does do?')">What she does do?</button>
+                <button class="option-btn" onclick="selectOption(this, 'What does she do?')">What does she do?</button>
+                <button class="option-btn" onclick="selectOption(this, 'Does what she do?')">Does what she do?</button>
+            </div>
+
+            <button class="check-btn" onclick="checkAnswer('What does she do?')">Check</button>
+            <div id="feedback-1" class="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        let attempts = 0;
+        let selectedValue = "";
+
+        function selectOption(button, value) {
+            // Quitar la selección previa de los botones
+            const buttons = button.parentElement.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            // Marcar el actual
+            button.classList.add('selected');
+            selectedValue = value;
+        }
+
+        function checkAnswer(correctAnswer) {
+            const feedback = document.getElementById("feedback-1");
+
+            if (!selectedValue) {
+                feedback.textContent = "Please select an option first.";
+                feedback.className = "feedback incorrect";
+                return;
+            }
+            
+            if (selectedValue.toLowerCase() === correctAnswer.toLowerCase()) {
+                feedback.textContent = "Correct! Great job!";
+                feedback.className = "feedback correct";
+                attempts = -1;
+            } else {
+                attempts++;
+                if (attempts === 1) {
+                    feedback.textContent = "Incorrect. Try again!";
+                    feedback.className = "feedback incorrect";
+                } else {
+                    feedback.textContent = `Incorrect. The correct answer was: "${correctAnswer}"`;
+                    feedback.className = "feedback reveal";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
